@@ -1,4 +1,7 @@
--- https://github.com/VoidMasterX | siper#9938
+--[[ 
+https://github.com/VoidMasterX | siper#9938. 
+Slightly modified settings table for simplification 
+]]--
 
 local module = {
     drawingcache = {},
@@ -6,21 +9,18 @@ local module = {
     settings = {
         enabled = true,
         refreshrate = 5,
-        limitdistance = true,
+        limitdistance = false,
         maxdistance = 2500,
         teamcheck = false,
         teamcolor = true,
         textoffset = 0,
-        textfont = 0,
+        textfont = 2,
         textsize = 18,
         names = true,
-        namesoutline = false,
         namescolor = Color3.new(1, 1, 1),
         distance = true,
-        distanceoutline = false,
         distancecolor = Color3.new(1, 1, 1),
         boxes = true,
-        boxesoutline = false,
         boxesfill = false,
         boxesfillcolor = Color3.new(1, 1, 1),
         boxesfilltrans = 0.5,
@@ -30,8 +30,8 @@ local module = {
         tracersorigin = "Bottom",
         healthbars = false,
         healthbarsoffset = 2,
-        healthbarsoutline = false,
         healthbarscolor = Color3.new(0, 1, 0),
+        outlines = false
     }
 }
 
@@ -171,18 +171,18 @@ function module:AddEsp(Player)
                 local BoxSize = Vector2.new(Width, Height)
                 local BoxPosition = Vector2.new(math.floor(Data.Positions.BottomRight.X), math.floor(Data.Positions.BottomRight.Y))
                 local HealthbarSize = Vector2.new(2, math.floor(BoxSize.Y * (Health / MaxHealth)))
-                local HealthbarPosition = Vector2.new(math.floor(Data.Positions.TopLeft.X - ((4 + self.settings.healthbarsoffset) + (self.settings.healthbarsoutline and 1 or 0))), math.floor(Data.Positions.BottomLeft.Y))
+                local HealthbarPosition = Vector2.new(math.floor(Data.Positions.TopLeft.X - ((4 + self.settings.healthbarsoffset) + (self.settings.outlines and 1 or 0))), math.floor(Data.Positions.BottomLeft.Y))
                 local ViewportSize = CurrentCamera.ViewportSize
 
                 Retainer.nameobject.Visible = self.settings.names
-                Retainer.nameobject.Outline = self.settings.namesoutline
+                Retainer.nameobject.Outline = self.settings.outlines
                 Retainer.nameobject.Size = self.settings.textsize
                 Retainer.nameobject.Font = self.settings.textfont
                 Retainer.nameobject.Color = self:ParseColor(self.settings.namescolor, Player)
                 Retainer.nameobject.Position = Vector2.new(Data.Positions.Middle.X, (Data.Positions.TopLeft.Y - 15) + self.settings.textoffset)
 
                 Retainer.distanceobject.Visible = self.settings.distance
-                Retainer.distanceobject.Outline = self.settings.distanceoutline
+                Retainer.distanceobject.Outline = self.settings.outlines
                 Retainer.distanceobject.Text = math.floor(Magnitude) .. " Studs"
                 Retainer.distanceobject.Size = self.settings.textsize
                 Retainer.distanceobject.Font = self.settings.textfont
@@ -191,7 +191,7 @@ function module:AddEsp(Player)
 
                 Retainer.boxobject.Visible = self.settings.boxes
                 Retainer.boxobject.Color = self:ParseColor(self.settings.boxescolor, Player)
-                Retainer.boxoutlineobject.Visible = self.settings.boxes and self.settings.boxesoutline
+                Retainer.boxoutlineobject.Visible = self.settings.boxes and self.settings.outlines
                 Retainer.boxfillobject.Color = self:ParseColor(self.settings.boxesfillcolor, Player)
                 Retainer.boxfillobject.Transparency = self.settings.boxesfilltrans
                 Retainer.boxfillobject.Visible = self.settings.boxes and self.settings.boxesfill
@@ -207,7 +207,7 @@ function module:AddEsp(Player)
 
                 Retainer.healthbarobject.Visible = self.settings.healthbars
                 Retainer.healthbarobject.Color = self:ParseColor(self.settings.healthbarscolor, Player)
-                Retainer.healthbaroutlineobject.Visible = self.settings.healthbars and self.settings.healthbarsoutline
+                Retainer.healthbaroutlineobject.Visible = self.settings.healthbars and self.settings.outlines
 
                 Retainer.healthbarobject.Size = HealthbarSize
                 Retainer.healthbarobject.Position = HealthbarPosition
